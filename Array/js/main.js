@@ -1,62 +1,62 @@
 //First task
 
 
-// let array1 = [1,-2,3,-4,-5];
-// let array2 = [5,7,-38,0,10];
-// let array3 = array1.concat(array2);
-// array3.sort();
-// array3.reverse();
-// console.log(array3);
+let array1 = [1,-2,3,-4,-5];
+let array2 = [5,7,-38,0,10];
+let array3 = array1.concat(array2);
+array3.sort();
+array3.reverse();
+console.log(array3);
 
 
 
 // Second task
 
 
-// let markArr=[];
-//  for (let i = 0; i < 10; i++) {
-//      let mark = parseInt(prompt(`Enter mark #${i+1}: `))
-//     markArr.push(mark);
-//  }
+let markArr=[];
+ for (let i = 0; i < 10; i++) {
+     let mark = parseInt(prompt(`Enter mark #${i+1}: `))
+    markArr.push(mark);
+ }
  
-//  let menuSelector=0;
-//  do {
-//      menuSelector = parseInt(prompt("Select option:\n1. Show marks\n2. Retake mark\n3. Is scholarship existing?\n 0. exit"))
+ let menuSelector=0;
+ do {
+     menuSelector = parseInt(prompt("Select option:\n1. Show marks\n2. Retake mark\n3. Is scholarship existing?\n 0. exit"))
 
-//      switch (menuSelector) {
-//          case 1:
-//             console.log(markArr);
-//              break;
-//              case 2:
-//             console.log(markArr);
-//              let index = parseInt(prompt("Enter number of mark to retake: "));
-//              let newMark = parseInt(prompt("Enter new mark: "));
-//               if (index!=-1) {
-//                   markArr[index-1]=newMark;
-//               }
-//              break;
-//              case 3:
-//                  var sum=0;
-//              for (let index = 0; index < markArr.length; index++) {
-//                  sum+=markArr[index];
-//              }
-//              var avg = sum/markArr.length;
-//              if (avg>=10.7) {
-//                  console.log(`You have a scholarship\nYour avg mark equals: ${avg}`);
-//              }
-//              else{
-//                 console.log(`You don't have a scholarship\nYour avg mark equals: ${avg} but you need more than 10.6`);
-//              }
-//              break;
-//              case 0:
-//              menuSelector=0;
-//              break;
+     switch (menuSelector) {
+         case 1:
+            console.log(markArr);
+             break;
+             case 2:
+            console.log(markArr);
+             let index = parseInt(prompt("Enter number of mark to retake: "));
+             let newMark = parseInt(prompt("Enter new mark: "));
+              if (index!=-1) {
+                  markArr[index-1]=newMark;
+              }
+             break;
+             case 3:
+                 var sum=0;
+             for (let index = 0; index < markArr.length; index++) {
+                 sum+=markArr[index];
+             }
+             var avg = sum/markArr.length;
+             if (avg>=10.7) {
+                 console.log(`You have a scholarship\nYour avg mark equals: ${avg}`);
+             }
+             else{
+                console.log(`You don't have a scholarship\nYour avg mark equals: ${avg} but you need more than 10.6`);
+             }
+             break;
+             case 0:
+             menuSelector=0;
+             break;
      
-//          default:
-//              break;
-//      }
+         default:
+             break;
+     }
 
-//  } while (menuSelector!=0);
+ } while (menuSelector!=0);
 
 
 // 3th
