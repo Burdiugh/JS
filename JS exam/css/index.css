@@ -1,0 +1,90 @@
+body{
+    background:#4682B4 ;
+}
+
+.info-block{
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.list-block{
+    width: 700px;
+    height: 650px;
+    background: white;
+    border-radius: 10px;
+}
+
+.list-block p{
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.characters-list-block{
+    box-shadow: 0 0 3px #ccc;
+    border-radius: 2px;
+    width: 650px;
+    height: 550px;
+    margin-left: 30px;
+}
+
+.bodyElement{
+    margin-left: 5px;
+    margin-right: 5px;
+    border: solid #32a1ce;
+    display: flex;
+    justify-content:space-between;
+}
+
+.characters-list p{
+    padding-left: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.navbar .navbar-nav .nav-link{
+    margin-right: 70px;
+}
+
+.characterImg{
+    height: 60px;
+    width: 60px;
+}
+
+.character-block{
+    width: 700px;
+    height: 650px;
+    background: white;
+    border-radius: 10px;
+}
+
+.character-block p{
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.character-desc{
+    box-shadow: 0 0 3px #ccc;
+    border-radius: 2px;
+    width:650px;
+    height: 570px;
+    margin-left: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.elementMainDesc p{
+    font-size: 20px;
+}
+
+.elementDetailDesc p{
+  margin-bottom: 0px;
+}
+
+.character-desc-img{
+    width: 250px;
+    height: 250px;
+}
+
