@@ -6,35 +6,106 @@ let flag = false;
 
 function Init(){
 
-  Request(URL_SWAPI, PrintCharacters);
-    
+  GetRequest(URL_SWAPI, PrintCharacters);
+  let isDescSortId = false;
+  let isDescName = false;
   const id = document.querySelector(".id");
+  const searchInput = document.getElementById('searchInput');
   const name = document.querySelector(".name");
   const image = document.querySelector(".image");
-
-  id.addEventListener('click', () => {
-    flag=true;
-    characters.sort(function(a, b){return b - a});
-    Request(URL_SWAPI,PrintCharacters);
+  const searchButton = document.getElementById('searchBtn');
+  searchButton.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    searchByName(searchInput.value);
+  });
+  searchInput.addEventListener('change', (ev) => {
+    ev.preventDefault();
+    console.log(ev.target.value);
+    if(!ev.target.value || ev.target.value == ''){
+      console.log('fdfsfsdf');
+      GetRequest(URL_SWAPI, PrintCharacters);
+    }
+  });
+  id.addEventListener('click', (e) => {
+    e.preventDefault();
+    //flag=true;
+    isDescSortId = !isDescSortId;
+    if(isDescSortId){
+      characters.sort(function(a, b){
+        if(a.id > b.id) return -1;
+        if(a.id < b.id) return 1;
+        return 0;
+      });
+    }
+    else{
+      characters.sort(function(a, b){
+        if(a.id < b.id) return -1;
+        if(a.id > b.id) return 1;
+        return 0;
+      });
+    }
+    PrintCharacters(characters);
+    //GetRequest(URL_SWAPI,() => PrintCharacters(characters));
   })
 
-  name.addEventListener('click', () => {
-    flag=true;
-   characters.sort();
-Request(URL_SWAPI,PrintCharacters);
+  name.addEventListener('click', (e) => {
+    e.preventDefault();
+    isDescName = !isDescName;
+if(isDescName){
+  characters.sort(function compare_lname( a, b )
+  {
+  if ( a.firstName.toLowerCase() < b.firstName.toLowerCase()){
+    return -1;
+  }
+  if ( a.firstName.toLowerCase() > b.firstName.toLowerCase()){
+    return 1;
+  }
+  return 0;
+});
+}
+else{
+  characters.sort(function compare_lname( a, b )
+  {
+  if ( a.firstName.toLowerCase() > b.firstName.toLowerCase()){
+    return -1;
+  }
+  if ( a.firstName.toLowerCase() < b.firstName.toLowerCase()){
+    return 1;
+  }
+  return 0;
+});
+}
+   
+PrintCharacters(characters);
   })
 
-  image.addEventListener('click', () => {
-   //
-  })
+  // image.addEventListener('click', () => {
+  //  //
+  // })
   
   }
 
-  function Request(URL,Callback){
+  function isLocalStorageEmpty(){
+    if(localStorage.length>0){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+  function GetRequest(URL,Callback){
     fetch(URL)
     .then(result=>{return result.json();})
     .then(data=>{
         if(!flag){
+          if(isLocalStorageEmpty){
+            localStorage.setItem(data,'characters');
+          }
+          else{
+            let item = localStorage.getElementById('characters');
+            console.log(item);
+          }
             characters = [...data];
         }
         Callback(characters);
@@ -42,7 +113,46 @@ Request(URL_SWAPI,PrintCharacters);
     .catch(err=>console.log(err)); 
   }
 
-  PrintCharacters = (arr) =>{
+
+  //Method display selected element
+  const displaySelected = (selected) => {
+    //alert(selected.id);
+    const titleFullName = document.getElementById('characterName');
+    titleFullName.innerText = selected.fullName;
+
+   const id = document.getElementById('characterId');
+   id.innerText = 'Id: '+selected.id;
+    
+    const firstName = document.getElementById('firstName');
+    firstName.innerText = 'First Name: ' + selected.firstName;
+    const lastName = document.getElementById('lastName');
+    lastName.innerText = 'Last Name: ' + selected.lastName;
+    const fullName = document.getElementById('fullName');
+    fullName.innerText = 'Full Name: ' + selected.fullName;
+    const characterDescImg = document.getElementById('characterDescImg');
+    characterDescImg.src = selected.imageUrl;
+    const title = document.getElementById("title");
+    title.innerText  = 'Title: '+selected.title;
+    const family = document.getElementById("family");
+    family.innerText = 'Family: '+selected.family;
+
+    //DescBySeletion(selected);
+  }
+
+
+
+const searchByName = (name) => {
+  //if(characters.length < 0) return;
+  characters = characters.filter((el) => el.firstName.includes(name) || el.fullName.includes(name) || el.lastName.includes(name));
+  if(characters.length > 0){
+    PrintCharacters(characters);
+  }
+  else{
+    RemoveElements();
+  }
+}
+
+ const PrintCharacters = (arr) => {
 
     RemoveElements();
 
@@ -56,9 +166,13 @@ Request(URL_SWAPI,PrintCharacters);
 
 
     arr.forEach((item) => {
-        console.log(item);
-
+        //console.log(item);
         const character = document.createElement("div");
+        // event
+        character.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            displaySelected(item);
+        });
         character.setAttribute("class", "bodyElement");
 
         const characterId = document.createElement("p");
@@ -84,10 +198,10 @@ Request(URL_SWAPI,PrintCharacters);
 
   function DescBySeletion(element){
     
-    RemoveElements();
+    RemoveElements2();
     const data = document.querySelector(".character-desc");
     const wrapper = document.createElement("div");
-    wrapper.setAttribute("class", "bodyWrapper");
+    wrapper.setAttribute("class", "bodyWrapper2");
     data.appendChild(wrapper);
 
     const elementMainDesc = document.createElement("div");
@@ -99,28 +213,36 @@ Request(URL_SWAPI,PrintCharacters);
 
     const characterName = document.createElement("p");
     characterName.innerText = element.fullName;
-
+    characterName.setAttribute('id', 'characterName');
+    // alert(element.fullName);
     const characterImg = document.createElement("img");
+    characterImg.setAttribute("id","characterDescImg");
     characterImg.setAttribute("class","character-desc-img");
     characterImg.setAttribute("src",element.imageUrl);
     characterImg.setAttribute("alt","character");
 
     const characterId = document.createElement("p");
+    characterId.setAttribute('id','characterId');
     characterId.innerText = `id: ${element.id}`;
 
     const characterFirstName = document.createElement("p");
+    characterFirstName.setAttribute('id', 'firstName');
     characterFirstName.innerText = `First Name: ${element.firstName}`;
-
+    
     const characterLastName = document.createElement("p");
+    characterLastName.setAttribute('id', 'lastName');
     characterLastName.innerText = `Last Name: ${element.lastName}`;
-
+    
     const characterFullName = document.createElement("p");
+    characterFullName.setAttribute('id', 'fullName');
     characterFullName.innerText = `Full Name: ${element.fullName}`;
 
     const characterTitle = document.createElement("p");
+    characterTitle.setAttribute('id', 'title');
     characterTitle.innerText = `Title: ${element.title}`;
 
     const characterFamily = document.createElement("p");
+    characterFamily.setAttribute('id', 'family');
     characterFamily.innerText = `Family: ${element.family}`;
 
     
@@ -142,7 +264,14 @@ Request(URL_SWAPI,PrintCharacters);
   }
 
   function RemoveElements() {
+    //if(characters.length == 0) return;
     let element = document.querySelector(".bodyWrapper");
+    if(element)
+    element.remove();
+  }
+  function RemoveElements2() {
+    let element = document.querySelector(".bodyWrapper2");
+    if(element)
     element.remove();
   }
 

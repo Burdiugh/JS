@@ -1,7 +1,11 @@
 body{
     background:#4682B4 ;
 }
-
+.bodyWrapper{
+    overflow:scroll;
+    overflow-x: hidden;
+    height: 492px;
+}
 .info-block{
     margin-top: 100px;
     display: flex;
@@ -35,6 +39,11 @@ body{
     border: solid #32a1ce;
     display: flex;
     justify-content:space-between;
+    
+}
+
+.bodyElement:hover{
+    background-color: #F2F1F1;
 }
 
 .characters-list p{
